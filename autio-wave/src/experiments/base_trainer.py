@@ -147,9 +147,12 @@ class BaseTrainer(object):
                  'weight': 'normal',
                  'size': 40,
                  }
-        indices = torch.LongTensor(np.load('indices_bigger_baseline.npy')).to(self._device)
+        indices = torch.LongTensor(np.load('indices.npy')).to(self._device)
         idx = [32,128,512]
         title = [0.0625,0.25,1.0]
+        os.makedirs('./audio',exist_ok=True)
+        os.makedirs('./img',exist_ok=True)
+
         for i in range(len(indices)):
 
             fig, axs = plt.subplots(len(idx), 1, figsize=(35, 30), sharex=True)
@@ -158,9 +161,9 @@ class BaseTrainer(object):
                 axs[j].set_title('Fraction of Dimensions:' + str(title[j]), font1)
                 x = self._model.indices_fetch(indices[i][:idx[j]].unsqueeze(0))[0, 0].detach().cpu().numpy()
                 axs[j].plot(np.arange(len(x)), x)
-                write("./audio_baseline/sample_" + str(i) + "_" + str(title[j]) + ".wav", 16000, x)
+                write("./audio/sample_" + str(i) + "_" + str(title[j]) + ".wav", 16000, x)
 
-            plt.savefig('./img_baseline/sample_' + str(i), bbox_inches='tight', pad_inches=0)
+            plt.savefig('./img/sample_' + str(i), bbox_inches='tight', pad_inches=0)
             plt.clf()
 
 

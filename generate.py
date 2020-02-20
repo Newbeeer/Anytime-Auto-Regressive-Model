@@ -24,6 +24,7 @@ def get_args():
     parser.add_argument('--ae-batch-size', type=int, default=512)
     parser.add_argument('--ae-input-channels', type=int, default=3)
     parser.add_argument('--ae-celeba', action='store_true', default=False)
+    parser.add_argument('--ae-mnist', action='store_true', default=False
 
     parser.add_argument('--ar-checkpoint', type=str, required=True)
     parser.add_argument('--ar-batch-size', type=int, default=512)
@@ -101,8 +102,10 @@ def main(args):
     print('Loading AE model...')
     if args.ae_celeba:
         ae_model = VectorQuantizedVAE_CelebA(args.ae_input_channels, args.tokens_per_sample, args.vocab_size).cuda()
+    elif args.ae_mnist:
+        ae_model = VectorQuantizedVAE_CelebA(args.ae_input_channels, args.tokens_per_sample, args.vocab_size).cuda()
     elif args.original:
-        model = VectorQuantizedVAE_Bigger(num_channels, args.tokens_per_sample, args.vocab_size).cuda()
+        ae_model = VectorQuantizedVAE_Bigger(args.ae_input_channels,, args.tokens_per_sample, args.vocab_size).cuda()
     else:
         ae_model = VectorQuantizedVAE_Dim(args.ae_input_channels, args.tokens_per_sample, args.vocab_size).cuda()
     ae_model.load_state_dict(torch.load(args.ae_checkpoint))

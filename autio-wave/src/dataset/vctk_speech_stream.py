@@ -132,13 +132,7 @@ class VCTKSpeechStream(object):
                     bar = tqdm(loader, initial=initial_index)
                     for data in bar:
                         (preprocessed_audio, one_hot, speaker_id, quantized, wav_filename, sampling_rate, shifting_time, random_starting_index, preprocessed_length, top_db) = data
-                        # print("One hot:",one_hot.size())
-                        # index = np.arange(7680)
-                        # one_hot = one_hot.squeeze().numpy()
-                        # one_hot = np.argmax(one_hot,axis=0)
-                        # plt.plot(index,one_hot)
-                        # plt.savefig('test.png')
-                        # plt.clf()
+
                         output_path = output_dir + os.sep + str(i) + '.pickle'
                         if os.path.isfile(output_path):
                             if os.path.getsize(output_path) == 0:
@@ -157,10 +151,6 @@ class VCTKSpeechStream(object):
                             filters_number=input_filters_number
                         )
 
-                        # if input_features.shape[0] != input_target_shape[0] or input_features.shape[1] != input_target_shape[1]:
-                        #     ConsoleLogger.warn("Raw features number {} with invalid dimension {} will not be saved. Target shape: {}".format(i, input_features.shape, input_target_shape))
-                        #     i += 1
-                        #     continue
 
                         output_features = SpeechFeatures.features_from_name(
                             name=output_features_name,

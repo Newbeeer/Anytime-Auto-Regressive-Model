@@ -1,6 +1,6 @@
 {
-    "experiments_path": "/atlas/u/xuyilun/vctk/experiments_wave_vq_whole_bigger",
-    "results_path": "/atlas/u/xuyilun/vctk/experiments_wave_vq_whole_bigger/results",
+    "experiments_path": "../experiments_wave_vq_whole_bigger",
+    "results_path": "../experiments_wave_vq_whole_bigger/results",
     "configuration_path": "../configurations/vctk_deconv_bigger.yaml",
     "seed": 1234,
     "experiments": {

@@ -39,8 +39,7 @@ class SpeechFeatures(object):
     default_augmented = True
 
     @staticmethod
-    def mfcc(signal, one_hot, rate=default_rate, filters_number=default_filters_number, augmented=default_augmented):
-
+    def mfcc(signal):
         return signal
 
     @staticmethod

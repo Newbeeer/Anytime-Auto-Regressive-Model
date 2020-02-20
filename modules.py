@@ -114,39 +114,30 @@ class VectorQuantizedVAE_Dim(nn.Module):
         super().__init__()
         self.dim = dim
         self.factor = 2
-        #self.map = torch.nn.Parameter(torch.randn((1, dim, 4, 4)))
         self.encoder = nn.Sequential(
             nn.Conv2d(input_dim, 64 * self.factor, 4, 2, 1),
             nn.BatchNorm2d(64 * self.factor),
             nn.ReLU(True),
-            #ResBlock(input_dim=64 * self.factor, latent_dim=64 * self.factor, output_dim=64 * self.factor),
             nn.Conv2d(64 * self.factor, 128 * self.factor, 4, 2, 1),
             nn.BatchNorm2d(128 * self.factor),
             nn.ReLU(True),
-            #ResBlock(input_dim= 128 * self.factor, latent_dim= 128 * self.factor, output_dim=128 * self.factor),
             nn.Conv2d(128 * self.factor, 256 * self.factor, 4, 2, 1),
             nn.BatchNorm2d(256 * self.factor),
             nn.ReLU(True),
             nn.Conv2d(256 * self.factor, dim, 3, 1, 1),
-            #ResBlock(input_dim=dim, latent_dim=dim,output_dim=dim),
-            #ResBlock(input_dim=dim,latent_dim=dim,output_dim=dim)
-            #ResBlock(dim),
+
         )
 
         self.codebook = VQEmbedding(K, 4, 4)
         self.decoder = nn.Sequential(
-            #ResBlock(dim),
-            #ResBlock(input_dim=dim,latent_dim=dim,output_dim=dim),
-            #nn.ReLU(True),
+
             nn.ConvTranspose2d(dim, 256 * self.factor, 3, 1, 1),
             nn.BatchNorm2d(256 * self.factor),
             nn.ReLU(True),
             nn.ConvTranspose2d(256 * self.factor, 128 * self.factor, 4, 2, 1),
             nn.BatchNorm2d(128 * self.factor),
             nn.ReLU(True),
-            #ResBlock(input_dim=128 * self.factor, latent_dim=128 * self.factor, output_dim=128 * self.factor),
             nn.ConvTranspose2d(128 * self.factor, 64 * self.factor, 4, 2, 1),
-            #ResBlock(input_dim=64 * self.factor, latent_dim=64 * self.factor, output_dim=64 * self.factor),
             nn.BatchNorm2d(64 * self.factor),
             nn.ReLU(True),
             nn.ConvTranspose2d(64 * self.factor, input_dim, 4, 2, 1),
@@ -276,6 +267,81 @@ class VectorQuantizedVAE_CelebA(nn.Module):
         z = self.codebook.indices_fetch(indices)
         if indices.size(1) < self.dim:
             zero_out = torch.zeros((indices.size(0), self.dim - indices.size(1), z.size(2), z.size(3))).cuda()
+            z = torch.cat((z,zero_out),dim=1)
+        x = self.decoder(z)
+        return x
+
+class VectorQuantizedVAE_mnist(nn.Module):
+    def __init__(self, input_dim, dim, K=512):
+        super().__init__()
+        self.dim = dim
+        self.factor = 1
+        self.encoder = nn.Sequential(
+            nn.Conv2d(input_dim, 16 * self.factor, 4, 2, 1),
+            nn.BatchNorm2d(16 * self.factor),
+            nn.ReLU(True),
+            nn.Conv2d(16 * self.factor, 32 * self.factor, 4, 2, 1),
+            nn.BatchNorm2d(32 * self.factor),
+            nn.ReLU(True),
+            nn.Conv2d(32 * self.factor, dim, 3, 1, 1),
+
+        )
+
+        self.codebook = VQEmbedding(K, 7, 7)
+        self.decoder = nn.Sequential(
+
+            nn.ConvTranspose2d(dim, 32 * self.factor, 3, 1, 1),
+            nn.BatchNorm2d(32 * self.factor),
+            nn.ReLU(True),
+            nn.ConvTranspose2d(32 * self.factor, 16 * self.factor, 4, 2, 1),
+            nn.BatchNorm2d(16 * self.factor),
+            nn.ReLU(True),
+            nn.ConvTranspose2d(16 * self.factor, input_dim, 4, 2, 1),
+            nn.Tanh()
+        )
+
+        self.apply(weights_init)
+
+    def encode(self, x):
+        z_e_x = self.encoder(x)
+        latents = self.codebook(z_e_x)
+        return latents
+
+    def decode(self, latents):
+        h = int(torch.sqrt(latents.size(2)))
+        z_q_x = self.codebook.embedding(latents).resize(latents.size(0),latents.size(1),h,h)  # (B, D, H, W)
+        x_tilde = self.decoder(z_q_x)
+        return x_tilde
+
+    def forward(self, x, full_sample=True, designate=None, index=False, interval = 1):
+        z_e_x = self.encoder(x)
+        if not index:
+            z_q_x_st, z_q_x = self.codebook.straight_through(z_e_x)
+        else:
+            z_q_x_st, z_q_x, indices = self.codebook.straight_through(z_e_x, index)
+        area = z_e_x.size(1)
+        if not full_sample:
+            if designate != None:
+                sample_index = designate
+            else:
+                interval = int(interval)
+                sample_index = np.array((np.random.randint(area) // interval + 1) * interval)
+                sample_index = sample_index.clip(10, area)
+            zero_out = torch.zeros((z_q_x_st.size(0), area - sample_index, z_q_x_st.size(2), z_q_x_st.size(2))).cuda()
+            z_q_x_st = torch.cat((z_q_x_st[:, :sample_index], zero_out), dim=1)
+            x_tilde = self.decoder(z_q_x_st)
+            return x_tilde, z_e_x, z_q_x, sample_index
+        else:
+            x_tilde = self.decoder(z_q_x_st)
+            if not index:
+                return x_tilde, z_e_x, z_q_x
+            else:
+                return x_tilde, z_e_x, z_q_x, indices
+
+    def indices_fetch(self, indices):
+        z = self.codebook.indices_fetch(indices)
+        if indices.size(1) < self.dim:
+            zero_out = torch.zeros((indices.size(0), self.dim - indices.size(1), 7, 7)).cuda()
             z = torch.cat((z,zero_out),dim=1)
         x = self.decoder(z)
         return x

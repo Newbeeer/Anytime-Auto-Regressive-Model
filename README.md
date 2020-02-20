@@ -81,7 +81,7 @@ python3 generate.py --n-samples number-of-samples --out-path paht-to-img \
 --tokens-per-sample latent-size --vocab-size codebook-size --tokens-per-target code-num \
 --ae-checkpoint path-to-ae --ae-batch-size 512 \
 --ar-checkpoint path-to-ar --ar-batch-size batch-size
-
+(--ae_celeba --ae_mnist)
 number-of-samples: number of samples to be generated
 path-to-img: path to the generated samples
 latent-size: latent code length
@@ -90,6 +90,8 @@ code-num: number of codes used to generated (Anytime sampling!)
 path-to-ae: path to the VQ-VAE checkpoint in Step 2
 path-to-ar: path to the Transformer checkpoint in Step 3
 batch-size: batch size for Transforer
+ae_celeba: store_true for generating CelebA
+ae_mnist: store_true for generating mnist
 ```
 
 

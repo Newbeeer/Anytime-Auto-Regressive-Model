@@ -102,8 +102,7 @@ def main(args):
     sampled_indices = ar_generate_fn(args.n_samples)
     mid_time = time.time()
     print(f'AR finished in {mid_time - start_time} seconds.')
-
-    np.save('indices_bigger.npy',sampled_indices)
+    np.save('indices.npy',sampled_indices)
     print("Done!")
 
 if __name__ == '__main__':
