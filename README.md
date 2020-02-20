@@ -12,8 +12,6 @@ In dir `audio_baseline`: audio samples generated with 0.0625/0.25/1.0 fractions 
 
 ### Experiment 1: Image generation
 
-
-
 ####Training:
 
 - Step 1: Pretrain VQ-VAE with full code length:
@@ -97,6 +95,8 @@ batch-size: batch size for Transforer
 
 
 ### Experiment 2: Audio Generation
+
+Firstly `cd audio-wave/src`.
 
 
 
