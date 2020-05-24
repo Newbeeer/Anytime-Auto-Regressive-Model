@@ -2,9 +2,9 @@
 
 
 
-##Experiment 1: Image generation
+### Experiment 1: Image generation
 
-####Training:
+#### Training:
 
 - Step 1: Pretrain VQ-VAE with full code length:
 
@@ -88,15 +88,13 @@ ae_mnist: store_true for generating mnist
 
 
 
-
-
-##Experiment 2: Audio Generation
+### Experiment 2: Audio Generation
 
 Firstly `cd audio-wave/src`.
 
 
 
-####Training:
+#### Training:
 
 - Step 1: Pretrain VQ-VAE with full code length:
 
