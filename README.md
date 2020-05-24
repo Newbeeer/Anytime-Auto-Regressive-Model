@@ -2,15 +2,7 @@
 
 
 
-### Audio samples
-
-In dir `audio`: audio samples generated with 0.0625/0.25/1.0 fractions of full code length by anytime sampling on **ordered** codes.
-
-In dir `audio_baseline`: audio samples generated with 0.0625/0.25/1.0 fractions of full code length by anytime sampling on **unordered** codes.
-
-
-
-### Experiment 1: Image generation
+##Experiment 1: Image generation
 
 ####Training:
 
@@ -96,7 +88,9 @@ ae_mnist: store_true for generating mnist
 
 
 
-### Experiment 2: Audio Generation
+
+
+##Experiment 2: Audio Generation
 
 Firstly `cd audio-wave/src`.
 
