@@ -2,6 +2,10 @@
 
 
 
+
+
+
+
 ### Experiment 1: Image generation
 
 #### Training:
@@ -36,6 +40,8 @@ learning-rate: learning rate (recommended:1e-3)
 
 
 
+![image1](/Users/aaronxu/Desktop/test/Anytime_autoregressive_git/image1.png)
+
 - Step 3: Train autoregressive model
 
 ```shell
@@ -66,7 +72,7 @@ iterations: training iterations
 
 
 
-####Anytime sampling:
+#### Anytime sampling:
 
 ```shell
 python3 generate.py --n-samples number-of-samples --out-path paht-to-img \
@@ -142,7 +148,7 @@ iterations: training iterations
 
 
 
-####Anytime sampling:
+#### Anytime sampling:
 
 ```shell
 python3 generate.py --n-samples number-of-samples --out-path paht-to-img \
