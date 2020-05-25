@@ -40,7 +40,7 @@ learning-rate: learning rate (recommended:1e-3)
 
 
 
-![image1](/Users/aaronxu/Desktop/test/Anytime_autoregressive_git/image1.png)
+<img src="https://github.com/Newbeeer/Anytime-Auto-Regressive-Model/blob/master/image1.png" width="650px" />
 
 - Step 3: Train autoregressive model
 
@@ -69,6 +69,10 @@ path-to-checkpoint: the path of the best checkpoint in Step 2
 ar-batch-size: batch size of autorregressive model
 iterations: training iterations
 ```
+
+<img src="https://github.com/Newbeeer/Anytime-Auto-Regressive-Model/blob/master/image2.png" width="650px" />
+
+
 
 
 
