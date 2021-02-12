@@ -8,6 +8,8 @@
 
 
 
+
+
 ## Experiment 1: Image generation
 
 #### Training:
@@ -97,6 +99,8 @@ batch-size: batch size for Transforer
 ae_celeba: store_true for generating CelebA
 ae_mnist: store_true for generating mnist
 ```
+
+
 
 
 
