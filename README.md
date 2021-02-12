@@ -1,12 +1,14 @@
 # Anytime Autoregressive Model
 
+*Anytime Sampling for Autoregressive Models via Ordered Autoencoding* , ICLR 21
+
+​    Yilun Xu, Yang Song, Sahaj Gara, Linyuan Gong, Rui Shu, Aditya Grover, Stefano Ermon
+
+**A new family of autoregressive model that enables anytime sampling​!:smiley:**
 
 
 
-
-
-
-### Experiment 1: Image generation
+## Experiment 1: Image generation
 
 #### Training:
 
@@ -76,7 +78,7 @@ iterations: training iterations
 
 
 
-#### Anytime sampling:
+#### Anytime sampling (Inference):
 
 ```shell
 python3 generate.py --n-samples number-of-samples --out-path paht-to-img \
@@ -98,11 +100,11 @@ ae_mnist: store_true for generating mnist
 
 
 
-### Experiment 2: Audio Generation
+
+
+## Experiment 2: Audio Generation
 
 Firstly `cd audio-wave/src`.
-
-
 
 #### Training:
 
@@ -150,9 +152,7 @@ ar-batch-size: batch size of autorregressive model
 iterations: training iterations
 ```
 
-
-
-#### Anytime sampling:
+#### Anytime sampling (Inference):
 
 ```shell
 python3 generate.py --n-samples number-of-samples --out-path paht-to-img \
@@ -166,5 +166,22 @@ codebook-size: codebook size
 code-num: number of codes used to generated (Anytime sampling!)
 path-to-ar: path to the Transformer checkpoint in Step 3
 batch-size: batch size for Transforer
+```
+
+
+
+
+
+## Citation
+
+```
+@inproceedings{
+xu2021anytime,
+title={Anytime Sampling for Autoregressive Models via Ordered Autoencoding},
+author={Yilun Xu and Yang Song and Sahaj Garg and Linyuan Gong and Rui Shu and Aditya Grover and Stefano Ermon},
+booktitle={International Conference on Learning Representations},
+year={2021},
+url={https://openreview.net/forum?id=TSRTzJnuEBS}
+}
 ```
 
