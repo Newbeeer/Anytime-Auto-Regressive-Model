@@ -44,7 +44,7 @@ learning-rate: learning rate (recommended:1e-3)
 
 
 
-<img src="https://github.com/Newbeeer/Anytime-Auto-Regressive-Model/blob/master/image1.png" width="650px" />
+<img src="https://github.com/Newbeeer/Anytime-Auto-Regressive-Model/blob/master/imgs/image1.png" width="650px" />
 
 - Step 3: Train autoregressive model
 
@@ -74,7 +74,7 @@ ar-batch-size: batch size of autorregressive model
 iterations: training iterations
 ```
 
-<img src="https://github.com/Newbeeer/Anytime-Auto-Regressive-Model/blob/master/image2.png" width="650px" />
+<img src="https://github.com/Newbeeer/Anytime-Auto-Regressive-Model/blob/master/imgs/image2.png" width="650px" />
 
 
 
