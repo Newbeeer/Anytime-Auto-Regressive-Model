@@ -4,6 +4,8 @@
 
 ​    Yilun Xu, Yang Song, Sahaj Gara, Linyuan Gong, Rui Shu, Aditya Grover, Stefano Ermon
 
+[[Slide](https://www.dropbox.com/scl/fi/54d9y4h6pjrxrc5fs2ftf/anytime_paper.pptx?dl=0&rlkey=n1wkz5y47pwdzde2hbdwptatr)]
+
 **A new family of autoregressive model that enables anytime sampling​!:smiley:**
 
 
